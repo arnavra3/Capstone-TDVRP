@@ -1,0 +1,312 @@
+TOTAL_INSTANCES 11
+
+INSTANCE TD_HARD_C_12_001
+LAYOUT C
+CUSTOMERS 12
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+148 146 140 131
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           800       0
+1        4       17      22      78          165       15
+2        97      12      42      188         276       14
+3        56      86      41      318         395       17
+4        25      10      20      131         235       17
+5        100     14      42      159         265       11
+6        55      95      43      312         382       16
+7        5       17      21      85          192       12
+8        84      13      38      226         315       16
+9        52      90      33      368         433       20
+10       18      14      42      147         226       20
+11       80      7       45      132         195       12
+12       46      74      27      264         339       14
+
+INSTANCE TD_HARD_C_11_002
+LAYOUT C
+CUSTOMERS 11
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+123 122 109 96
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           750       0
+1        20      0       32      108         210       14
+2        68      2       44      193         262       10
+3        54      66      21      286         361       11
+4        4       25      23      141         211       19
+5        83      25      38      112         213       11
+6        53      91      21      216         310       10
+7        4       10      37      44          141       10
+8        83      12      30      101         196       18
+9        55      75      41      263         367       19
+10       12      26      20      84          173       10
+11       74      4       40      173         267       14
+
+INSTANCE TD_HARD_RC_11_003
+LAYOUT RC
+CUSTOMERS 11
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+132 131 121 101
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           750       0
+1        40      41      31      92          187       16
+2        12      86      30      227         311       18
+3        33      32      23      106         166       15
+4        37      86      33      202         269       18
+5        44      37      31      65          141       14
+6        22      82      30      241         306       12
+7        61      26      44      171         248       14
+8        3       62      32      237         321       12
+9        92      97      39      350         415       18
+10       39      89      39      177         279       20
+11       34      53      41      124         232       16
+
+INSTANCE TD_HARD_C_12_004
+LAYOUT C
+CUSTOMERS 12
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+135 134 128 115
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           800       0
+1        25      33      42      4           84        20
+2        100     17      20      213         322       18
+3        53      79      20      356         457       11
+4        28      20      45      75          147       16
+5        86      15      40      244         346       16
+6        48      85      20      239         328       16
+7        14      19      22      52          154       16
+8        92      8       37      174         248       20
+9        41      98      36      230         332       18
+10       15      27      25      117         179       15
+11       75      10      43      137         224       15
+12       53      69      35      220         295       16
+
+INSTANCE TD_HARD_RC_12_005
+LAYOUT RC
+CUSTOMERS 12
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+135 124 118 106
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           800       0
+1        32      86      32      219         297       20
+2        9       85      34      263         328       17
+3        59      30      36      168         247       11
+4        47      82      33      163         224       17
+5        33      43      45      169         256       17
+6        11      80      44      308         380       10
+7        20      69      20      218         287       14
+8        22      77      26      179         288       15
+9        8       36      32      277         350       16
+10       20      64      33      241         310       20
+11       48      57      22      105         165       18
+12       30      69      36      181         246       17
+
+INSTANCE TD_HARD_C_11_006
+LAYOUT C
+CUSTOMERS 11
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+113 103 102 100
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           750       0
+1        16      20      24      132         196       15
+2        67      6       34      144         254       13
+3        57      96      37      226         334       17
+4        1       9       21      128         213       15
+5        95      27      39      244         335       17
+6        55      83      37      346         408       15
+7        15      19      24      18          81        10
+8        86      17      20      186         256       16
+9        59      84      35      320         391       20
+10       14      13      21      18          83        18
+11       81      9       30      135         208       15
+
+INSTANCE TD_HARD_RC_10_007
+LAYOUT RC
+CUSTOMERS 10
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+209 193
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           700       0
+1        0       63      35      221         291       20
+2        17      87      44      198         307       15
+3        85      85      29      276         344       20
+4        29      69      28      187         250       18
+5        12      25      33      246         327       10
+6        10      76      36      195         281       14
+7        53      74      42      194         261       17
+8        11      80      23      250         339       15
+9        39      94      39      248         317       17
+10       27      80      28      215         315       20
+
+INSTANCE TD_HARD_RC_12_008
+LAYOUT RC
+CUSTOMERS 12
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+144 143 121 121
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           800       0
+1        80      10      26      280         348       14
+2        25      75      41      190         258       18
+3        32      13      37      265         347       16
+4        7       74      28      243         321       14
+5        44      24      39      137         215       14
+6        14      97      42      355         427       15
+7        81      43      39      221         294       17
+8        25      89      21      261         322       17
+9        5       56      36      292         354       13
+10       8       84      35      302         375       20
+11       82      40      43      168         278       12
+12       8       83      30      328         407       17
+
+INSTANCE TD_HARD_C_12_009
+LAYOUT C
+CUSTOMERS 12
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+136 134 133 112
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           800       0
+1        26      14      31      22          82        20
+2        85      17      42      145         253       17
+3        49      85      34      329         395       18
+4        10      15      20      69          159       10
+5        92      14      37      182         246       18
+6        46      74      43      240         303       14
+7        9       26      25      128         200       11
+8        96      8       22      126         230       20
+9        49      90      34      202         289       17
+10       24      15      29      133         242       16
+11       76      9       33      113         213       19
+12       40      97      36      384         470       18
+
+INSTANCE TD_HARD_C_10_010
+LAYOUT C
+CUSTOMERS 10
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+209 192
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           700       0
+1        9       21      27      16          80        17
+2        86      37      37      213         274       15
+3        39      92      24      237         316       20
+4        18      17      42      113         223       20
+5        72      7       40      203         265       12
+6        52      78      20      251         315       19
+7        20      15      34      131         212       10
+8        78      14      31      120         215       17
+9        55      83      42      304         366       10
+10       17      12      22      75          185       15
+
+INSTANCE TD_HARD_R_10_011
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+212 167
+M_INTERVALS 5
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.35
+400      600      0.7
+600      850      1.4
+850      2000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           700       0
+1        93      96      44      279         374       20
+2        43      16      27      215         325       15
+3        69      78      40      223         309       19
+4        63      61      39      159         259       15
+5        53      0       22      289         357       12
+6        84      26      27      214         302       11
+7        94      42      20      212         320       13
+8        77      6       29      301         377       20
+9        94      75      39      295         363       14
+10       79      99      20      250         313       17
+
