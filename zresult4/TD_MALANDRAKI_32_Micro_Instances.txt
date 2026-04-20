@@ -1,0 +1,690 @@
+TOTAL_INSTANCES 32
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT2_REP1
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+57 35
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        40      64      26      26          502       20
+2        28      76      29      107         557       18
+3        73      70      25      112         423       19
+4        0       78      12      73          532       11
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT2_REP2
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+84 75
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        87      62      20      101         415       13
+2        44      45      22      19          454       18
+3        43      11      27      74          397       18
+4        58      18      30      79          335       19
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT2_REP3
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+53 28
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        46      59      23      102         580       11
+2        74      70      25      108         487       11
+3        96      76      25      134         450       16
+4        53      72      25      132         588       18
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT2_REP4
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+94 91
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        6       90      26      26          459       20
+2        79      54      25      123         599       12
+3        29      15      30      120         552       17
+4        69      32      27      78          468       16
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT3_REP1
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+47 31
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        55      25      19      2           260       14
+2        19      83      29      133         620       17
+3        62      46      16      124         493       14
+4        65      98      25      142         561       16
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT3_REP2
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+59 30
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        58      12      24      66          431       18
+2        23      54      25      68          549       11
+3        63      47      13      105         392       13
+4        57      1       12      115         513       10
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT3_REP3
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+106 46
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        31      15      29      139         633       10
+2        34      85      30      39          290       15
+3        40      85      28      125         551       19
+4        92      17      27      121         521       13
+
+INSTANCE TD_MALANDRAKI_MICRO_N4_INT3_REP4
+LAYOUT R
+CUSTOMERS 4
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+23 23
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        10      53      15      150         478       12
+2        64      52      22      133         589       12
+3        25      48      10      99          576       11
+4        9       6       21      90          579       20
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT2_REP1
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 3
+VEHICLE_CAPACITIES
+43 38 31
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        41      87      19      83          566       17
+2        15      63      24      43          332       19
+3        75      66      16      86          453       16
+4        76      29      12      102         360       18
+5        25      82      15      139         627       10
+6        6       57      30      123         555       13
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT2_REP2
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+82 35
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        20      84      15      69          427       16
+2        68      53      12      78          375       16
+3        44      22      18      127         576       17
+4        53      36      24      83          465       12
+5        61      56      13      134         587       18
+6        35      12      16      1           495       13
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT2_REP3
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 3
+VEHICLE_CAPACITIES
+49 38 30
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        52      69      15      90          556       10
+2        20      45      27      146         598       20
+3        68      27      13      71          463       19
+4        96      72      16      75          469       19
+5        34      85      27      25          475       12
+6        33      12      23      27          452       12
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT2_REP4
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+81 70
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        64      40      18      16          340       19
+2        40      20      18      16          269       14
+3        52      99      18      3           267       16
+4        12      30      10      31          305       14
+5        87      71      28      80          529       15
+6        58      77      30      9           495       20
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT3_REP1
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+43 31
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        76      59      23      30          455       20
+2        47      64      18      74          566       16
+3        45      7       23      72          499       10
+4        42      37      13      106         437       14
+5        74      2       27      50          443       15
+6        7       92      13      31          311       12
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT3_REP2
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 3
+VEHICLE_CAPACITIES
+70 50 38
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        76      82      30      7           365       14
+2        74      16      21      98          444       16
+3        30      99      23      56          504       20
+4        16      23      27      138         563       10
+5        71      50      18      58          313       12
+6        2       35      27      106         423       17
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT3_REP3
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+133 90
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        22      70      11      131         590       20
+2        33      43      30      81          345       18
+3        84      1       30      120         384       13
+4        28      86      26      102         533       12
+5        46      29      27      87          557       14
+6        25      47      21      117         507       17
+
+INSTANCE TD_MALANDRAKI_MICRO_N6_INT3_REP4
+LAYOUT R
+CUSTOMERS 6
+TOTAL_VEHICLES 3
+VEHICLE_CAPACITIES
+62 36 35
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        24      20      30      39          413       16
+2        0       45      26      9           422       16
+3        22      10      19      139         576       15
+4        33      17      13      136         441       10
+5        89      74      19      11          505       19
+6        50      48      27      40          537       18
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT2_REP1
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+186 93
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        93      49      20      66          395       18
+2        5       94      28      48          339       20
+3        37      37      27      91          375       14
+4        49      24      30      122         612       10
+5        54      45      27      132         389       12
+6        22      40      27      41          298       12
+7        14      65      30      95          361       10
+8        47      38      16      39          442       18
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT2_REP2
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+142 113
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        13      41      25      18          365       11
+2        33      78      19      30          369       20
+3        60      63      13      132         445       18
+4        45      87      24      88          359       19
+5        8       99      12      79          396       17
+6        96      84      17      83          443       12
+7        64      71      20      126         479       15
+8        40      22      16      56          527       17
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT2_REP3
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 3
+VEHICLE_CAPACITIES
+84 75 56
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        97      100     21      97          401       16
+2        19      56      28      32          392       20
+3        34      42      13      68          533       15
+4        56      33      14      68          377       18
+5        42      18      27      68          393       11
+6        73      58      30      102         357       16
+7        70      91      20      104         440       20
+8        12      86      25      139         521       20
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT2_REP4
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+66 56 49 35
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        42      7       22      2           320       12
+2        71      89      18      85          483       12
+3        82      78      23      123         459       17
+4        1       4       17      30          449       20
+5        34      41      10      117         498       13
+6        35      79      30      20          412       15
+7        88      24      27      24          313       10
+8        42      28      24      43          473       13
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT3_REP1
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+68 63 59 48
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        66      87      28      34          311       18
+2        3       34      23      47          437       10
+3        93      65      17      87          424       17
+4        44      40      29      65          440       17
+5        41      32      11      125         409       20
+6        2       61      21      119         419       14
+7        47      35      26      77          382       16
+8        74      6       23      130         554       11
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT3_REP2
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 2
+VEHICLE_CAPACITIES
+68 67
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        65      66      29      125         456       15
+2        84      43      21      19          412       12
+3        22      97      18      133         605       18
+4        49      80      13      54          311       19
+5        59      30      16      130         599       16
+6        67      16      26      69          517       13
+7        91      62      14      83          426       18
+8        83      50      27      138         436       19
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT3_REP3
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+65 50 44 34
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        18      16      28      8           329       10
+2        38      22      14      138         565       14
+3        45      16      24      47          474       12
+4        6       96      15      39          394       20
+5        82      79      25      7           333       18
+6        28      65      21      23          392       18
+7        87      95      23      83          370       12
+8        91      65      11      1           265       17
+
+INSTANCE TD_MALANDRAKI_MICRO_N8_INT3_REP4
+LAYOUT R
+CUSTOMERS 8
+TOTAL_VEHICLES 3
+VEHICLE_CAPACITIES
+112 100 48
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        96      3       15      48          520       18
+2        11      54      23      43          354       13
+3        28      84      25      95          385       13
+4        68      54      23      92          522       17
+5        26      39      30      143         548       17
+6        61      11      16      29          472       13
+7        10      45      29      29          323       12
+8        26      82      23      109         366       13
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT2_REP1
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+70 47 43 33
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        36      94      21      2           374       16
+2        66      58      18      124         409       15
+3        13      18      27      91          457       13
+4        48      77      30      12          500       19
+5        89      85      27      65          562       15
+6        87      10      24      88          477       17
+7        67      67      13      75          334       14
+8        10      75      11      135         621       11
+9        57      72      13      147         642       16
+10       58      78      25      5           294       18
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT2_REP2
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 5
+VEHICLE_CAPACITIES
+65 60 60 37 34
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        11      21      27      4           502       14
+2        5       95      12      133         413       19
+3        93      42      14      120         431       14
+4        41      91      24      102         413       13
+5        65      40      23      125         438       10
+6        76      23      24      29          429       13
+7        60      75      22      135         389       17
+8        63      27      22      135         504       10
+9        100     17      19      133         463       13
+10       34      98      23      6           346       19
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT2_REP3
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+64 61 60 42
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        27      75      12      43          410       18
+2        51      14      13      102         601       16
+3        0       31      16      67          509       10
+4        21      67      18      21          336       15
+5        21      4       16      143         422       20
+6        57      70      11      119         584       15
+7        65      80      11      123         385       13
+8        37      11      15      16          337       20
+9        26      0       19      11          381       19
+10       33      9       27      140         552       12
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT2_REP4
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 5
+VEHICLE_CAPACITIES
+64 43 42 34 28
+M_INTERVALS 2
+START    END      SPEED_MULTIPLIER
+0        300      1.2
+300      1000     0.6
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        6       69      21      137         487       13
+2        59      11      17      3           358       10
+3        49      71      12      45          338       17
+4        30      21      27      129         572       13
+5        43      51      18      43          412       20
+6        11      2       21      33          523       11
+7        72      66      17      38          463       17
+8        41      22      25      29          314       18
+9        0       48      12      107         528       17
+10       72      43      26      21          461       15
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT3_REP1
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 5
+VEHICLE_CAPACITIES
+60 58 56 49 46
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        31      38      29      147         571       20
+2        72      22      19      2           500       18
+3        3       43      15      24          336       17
+4        85      60      15      128         616       19
+5        84      61      13      32          283       11
+6        78      67      19      104         594       12
+7        32      2       24      75          567       19
+8        19      48      30      1           364       20
+9        75      15      13      83          446       13
+10       8       49      18      113         549       17
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT3_REP2
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+97 94 81 57
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        40      21      13      140         397       19
+2        26      27      19      57          529       16
+3        88      85      20      25          333       12
+4        49      16      29      137         488       15
+5        26      78      27      138         525       14
+6        48      88      18      115         427       15
+7        22      65      19      50          376       10
+8        21      55      28      113         459       12
+9        81      63      11      78          516       19
+10       4       76      26      143         469       15
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT3_REP3
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 4
+VEHICLE_CAPACITIES
+81 53 42 41
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        85      78      26      89          531       15
+2        49      67      17      107         491       10
+3        54      49      29      62          455       15
+4        74      48      21      27          337       10
+5        27      22      25      100         471       19
+6        20      55      26      95          352       13
+7        69      10      13      55          406       11
+8        15      58      29      132         607       15
+9        80      12      23      82          411       13
+10       0       12      12      38          405       15
+
+INSTANCE TD_MALANDRAKI_MICRO_N10_INT3_REP4
+LAYOUT R
+CUSTOMERS 10
+TOTAL_VEHICLES 5
+VEHICLE_CAPACITIES
+54 49 43 40 38
+M_INTERVALS 3
+START    END      SPEED_MULTIPLIER
+0        200      1.2
+200      400      0.4
+400      1000     1.0
+CUSTOMER_DATA
+CUST_NO  XCOORD  YCOORD  DEMAND  READY_TIME  DUE_DATE  SERVICE_TIME
+0        50      50      0       0           1000      0
+1        43      76      15      22          360       11
+2        30      19      24      25          510       17
+3        70      54      14      5           430       11
+4        59      54      12      127         392       17
+5        57      60      21      12          366       11
+6        23      54      30      65          497       11
+7        69      67      17      27          366       16
+8        21      1       14      78          394       19
+9        99      55      13      93          581       13
+10       96      9       23      21          418       20
+
