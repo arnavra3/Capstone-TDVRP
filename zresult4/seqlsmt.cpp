@@ -25,14 +25,13 @@ string instance_name;
 double DEPOT_DUE;
 int TOTAL_VEHICLES;
 static const double EPS = 1e-9;
+const double RELOAD_TIME = 30.0; // Multi-Trip Penalty Time
 
 double get_distance(int n1, int n2) { return hypot(customers[n1].x - customers[n2].x, customers[n1].y - customers[n2].y); }
 
-// --- STRICT MILP MATCH: Discrete speeds with inclusive boundaries ---
 double get_travel_time(double dist, double start_time) {
     double speed = traffic_profile.back().speed; 
     for (const auto &iv : traffic_profile) {
-        // Changed to <= iv.end to perfectly match the MILP's inclusive constraint
         if (start_time >= iv.start && start_time <= iv.end) {
             speed = iv.speed;
             break;
@@ -87,14 +86,15 @@ bool better_v1(const Candidate &a, const Candidate &b) { return a.travel + EPS <
 bool better_v2(const Candidate &a, const Candidate &b) { return a.start + EPS < b.start; }
 bool better_v3(const Candidate &a, const Candidate &b) { return a.finish + EPS < b.finish; }
 
-Result solve_seqsl(int version, mt19937 &rng) {
+// --- UPGRADED MULTI-TRIP HEURISTIC ---
+Result solve_seqls(int version, mt19937 &rng) {
     Result res;
     vector<bool> visited(customers.size(), false);
     visited[0] = true;
     int unvisited = (int)customers.size() - 1;
     
     vector<double> local_garage = garage_capacities;
-    sort(local_garage.begin(), local_garage.end()); // SMALL TO LARGE (SEQ-SL)
+    sort(local_garage.rbegin(), local_garage.rend()); // LARGE TO SMALL (SEQ-LS)
     
     int used = 0;
     res.total_time = 0.0;
@@ -102,44 +102,74 @@ Result solve_seqsl(int version, mt19937 &rng) {
     while (unvisited > 0) {
         if (used >= TOTAL_VEHICLES) return Result{false};
         Vehicle truck = {used + 1, 0.0, 0.0, local_garage[used], 0, {0}};
-        bool added_any = false;
+        bool truck_did_anything = false;
+        bool added_reload_penalty = false;
         
-        while (true) {
+        while (unvisited > 0) {
             vector<Candidate> cands;
             for (int i = 1; i < (int)customers.size(); i++) {
                 if (visited[i]) continue;
                 Candidate cand = eval_move(truck, i);
                 if (cand.customer != -1) cands.push_back(cand);
             }
-            if (cands.empty()) break;
             
-            Candidate best;
-            if (version == 4) {
-                sort(cands.begin(), cands.end(), better_v3);
-                int k = min(5, (int)cands.size());
-                uniform_int_distribution<> d(0, k - 1);
-                best = cands[d(rng)];
+            if (!cands.empty()) {
+                Candidate best;
+                if (version == 4) {
+                    sort(cands.begin(), cands.end(), better_v3);
+                    int k = min(5, (int)cands.size());
+                    uniform_int_distribution<> d(0, k - 1);
+                    best = cands[d(rng)];
+                } else {
+                    auto comp = (version == 1) ? better_v1 : (version == 2) ? better_v2 : better_v3;
+                    sort(cands.begin(), cands.end(), comp);
+                    best = cands[0];
+                }
+                
+                truck.current_load += customers[best.customer].demand;
+                truck.clock_time = best.finish;
+                truck.current_node = best.customer;
+                truck.route.push_back(best.customer);
+                visited[best.customer] = true;
+                unvisited--;
+                truck_did_anything = true;
+                added_reload_penalty = false; // Penalty successfully used for a trip
             } else {
-                auto comp = (version == 1) ? better_v1 : (version == 2) ? better_v2 : better_v3;
-                sort(cands.begin(), cands.end(), comp);
-                best = cands[0];
+                if (truck.current_node == 0) {
+                    // Shift over. If we added a reload penalty but couldn't make a trip, refund it.
+                    if (added_reload_penalty) truck.clock_time -= RELOAD_TIME;
+                    break; 
+                } else {
+                    // Truck must return to depot to reload
+                    double ret = get_travel_time(get_distance(truck.current_node, 0), truck.clock_time);
+                    if (truck.clock_time + ret > DEPOT_DUE + EPS) return Result{false};
+                    
+                    truck.clock_time += ret;
+                    truck.route.push_back(0);
+                    truck.current_node = 0;
+                    truck.current_load = 0; // Drop load
+                    
+                    // Add reload penalty and try again next loop
+                    if (truck.clock_time + RELOAD_TIME <= DEPOT_DUE) {
+                        truck.clock_time += RELOAD_TIME;
+                        added_reload_penalty = true;
+                    } else {
+                        break; // Shift over
+                    }
+                }
             }
-            
-            truck.current_load += customers[best.customer].demand;
-            truck.clock_time = best.finish;
-            truck.current_node = best.customer;
-            truck.route.push_back(best.customer);
-            visited[best.customer] = true;
-            unvisited--;
-            added_any = true;
         }
-        if (!added_any) return Result{false};
         
-        double ret = get_travel_time(get_distance(truck.current_node, 0), truck.clock_time);
-        if (truck.clock_time + ret > DEPOT_DUE + EPS) return Result{false};
+        if (!truck_did_anything) return Result{false};
         
-        truck.clock_time += ret;
-        truck.route.push_back(0);
+        if (truck.current_node != 0) {
+            double ret = get_travel_time(get_distance(truck.current_node, 0), truck.clock_time);
+            if (truck.clock_time + ret > DEPOT_DUE + EPS) return Result{false};
+            truck.clock_time += ret;
+            truck.route.push_back(0);
+            truck.current_node = 0;
+        }
+        
         res.total_time += truck.clock_time;
         res.fleet.push_back(truck);
         used++;
@@ -148,11 +178,10 @@ Result solve_seqsl(int version, mt19937 &rng) {
     return res;
 }
 
-// --- CSV PARSER & AGGREGATION ENGINE ---
 map<string, double> load_milp_baselines(const string& filename) {
     map<string, double> baselines;
     ifstream file(filename);
-    if (!file) { cerr << "WARNING: Could not find " << filename << ". Ratios will be set to N/A.\n"; return baselines; }
+    if (!file) return baselines;
     string line;
     getline(file, line); 
     while (getline(file, line)) {
@@ -164,6 +193,7 @@ map<string, double> load_milp_baselines(const string& filename) {
     }
     return baselines;
 }
+
 
 // Data structure to hold averages exactly like Table V
 struct GroupStats {
@@ -231,6 +261,7 @@ void print_row(string col1, string col2, double dem_cap, const GroupStats& s) {
 
     cout << "\n";
 }
+
 int main()
 {
     map<string, double> milp_baselines = load_milp_baselines("milp_results_baseline.csv");
@@ -261,21 +292,20 @@ int main()
         overall_stats.inst_count++;
         overall_stats.sum_dem_cap += current_ratio;
 
-        update_stats(table_data[intervals][n], solve_seqsl(1, rng), best_sol, 1);
-        update_stats(table_data[intervals][n], solve_seqsl(2, rng), best_sol, 2);
-        update_stats(table_data[intervals][n], solve_seqsl(3, rng), best_sol, 3);
+        update_stats(table_data[intervals][n], solve_seqls(1, rng), best_sol, 1);
+        update_stats(table_data[intervals][n], solve_seqls(2, rng), best_sol, 2);
+        update_stats(table_data[intervals][n], solve_seqls(3, rng), best_sol, 3);
         
         Result best_r4;
         for (int i = 0; i < 20; i++) {
-            Result r = solve_seqsl(4, rng);
+            Result r = solve_seqls(4, rng);
             if (r.feasible && r.total_time < best_r4.total_time) best_r4 = r;
         }
         update_stats(table_data[intervals][n], best_r4, best_sol, 4);
     }
 
-    // --- PRINT TABLE V FORMAT ---
     cout << "\n=======================================================================================================\n";
-    cout << "TABLE V - RESULTS OF NEAREST-NEIGHBOR TDVRP HEURISTICS (SEQ-SL INTERNAL VERSIONS)\n";
+    cout << "TABLE V - RESULTS OF NEAREST-NEIGHBOR TDVRP HEURISTICS (SEQ-LS MULTI-TRIP)\n";
     cout << "=======================================================================================================\n";
     cout << left << setw(8) << "Ints" << setw(6) << "N" << setw(10) << "Dem/Cap" 
          << setw(18) << "--- V1(Travel) ---" << setw(18) << "--- V2(Start) ----" 

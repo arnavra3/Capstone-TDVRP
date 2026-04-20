@@ -175,21 +175,15 @@ struct GroupStats {
 };
 
 void update_stats(GroupStats &stats, const Result &r, double best_sol, int version) {
-    if (r.feasible) {
+    // STRICT FIX: Only aggregate data if the heuristic succeeded AND we have a valid MILP proof
+    if (r.feasible && best_sol > 0) {
         double veh = r.fleet.size();
+        double ratio = r.total_time / best_sol;
         
-        if (best_sol > 0) {
-            double ratio = r.total_time / best_sol;
-            if (version == 1) { stats.count_v1++; stats.sum_ratio_v1 += ratio; }
-            if (version == 2) { stats.count_v2++; stats.sum_ratio_v2 += ratio; }
-            if (version == 3) { stats.count_v3++; stats.sum_ratio_v3 += ratio; }
-            if (version == 4) { stats.count_v4++; stats.sum_ratio_v4 += ratio; }
-        }
-        
-        if (version == 1) stats.sum_veh_v1 += veh;
-        if (version == 2) stats.sum_veh_v2 += veh;
-        if (version == 3) stats.sum_veh_v3 += veh;
-        if (version == 4) stats.sum_veh_v4 += veh;
+        if (version == 1) { stats.count_v1++; stats.sum_ratio_v1 += ratio; stats.sum_veh_v1 += veh; }
+        if (version == 2) { stats.count_v2++; stats.sum_ratio_v2 += ratio; stats.sum_veh_v2 += veh; }
+        if (version == 3) { stats.count_v3++; stats.sum_ratio_v3 += ratio; stats.sum_veh_v3 += veh; }
+        if (version == 4) { stats.count_v4++; stats.sum_ratio_v4 += ratio; stats.sum_veh_v4 += veh; }
     }
 }
 
@@ -197,21 +191,37 @@ void print_row(string col1, string col2, double dem_cap, const GroupStats& s) {
     cout << left << setw(8) << col1 << setw(6) << col2 
          << setw(10) << fixed << setprecision(2) << dem_cap;
 
-    if (s.count_v1 > 0) cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v1 / s.count_v1);
-    else cout << setw(10) << "N/A";
-    cout << setw(8) << fixed << setprecision(2) << (s.inst_count ? s.sum_veh_v1 / s.inst_count : 0.0);
+    // V1 (Travel)
+    if (s.count_v1 > 0) {
+        cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v1 / s.count_v1);
+        cout << setw(8) << fixed << setprecision(2) << (s.sum_veh_v1 / s.count_v1);
+    } else {
+        cout << setw(10) << "N/A" << setw(8) << "N/A";
+    }
 
-    if (s.count_v2 > 0) cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v2 / s.count_v2);
-    else cout << setw(10) << "N/A";
-    cout << setw(8) << fixed << setprecision(2) << (s.inst_count ? s.sum_veh_v2 / s.inst_count : 0.0);
+    // V2 (Start)
+    if (s.count_v2 > 0) {
+        cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v2 / s.count_v2);
+        cout << setw(8) << fixed << setprecision(2) << (s.sum_veh_v2 / s.count_v2);
+    } else {
+        cout << setw(10) << "N/A" << setw(8) << "N/A";
+    }
 
-    if (s.count_v3 > 0) cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v3 / s.count_v3);
-    else cout << setw(10) << "N/A";
-    cout << setw(8) << fixed << setprecision(2) << (s.inst_count ? s.sum_veh_v3 / s.inst_count : 0.0);
+    // V3 (Finish)
+    if (s.count_v3 > 0) {
+        cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v3 / s.count_v3);
+        cout << setw(8) << fixed << setprecision(2) << (s.sum_veh_v3 / s.count_v3);
+    } else {
+        cout << setw(10) << "N/A" << setw(8) << "N/A";
+    }
 
-    if (s.count_v4 > 0) cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v4 / s.count_v4);
-    else cout << setw(10) << "N/A";
-    cout << setw(8) << fixed << setprecision(2) << (s.inst_count ? s.sum_veh_v4 / s.inst_count : 0.0);
+    // V4 (Prob)
+    if (s.count_v4 > 0) {
+        cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_v4 / s.count_v4);
+        cout << setw(8) << fixed << setprecision(2) << (s.sum_veh_v4 / s.count_v4);
+    } else {
+        cout << setw(10) << "N/A" << setw(8) << "N/A";
+    }
 
     cout << "\n";
 }

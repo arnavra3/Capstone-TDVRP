@@ -27,11 +27,11 @@ string instance_name;
 double DEPOT_DUE;
 int TOTAL_VEHICLES;
 static const double EPS = 1e-9;
+const double RELOAD_TIME = 30.0; // Multi-Trip Penalty Time
 
 // --- UTILITY FUNCTIONS ---
 double get_distance(int n1, int n2) { return hypot(customers[n1].x - customers[n2].x, customers[n1].y - customers[n2].y); }
 
-// --- STRICT MILP MATCH: Discrete speeds with inclusive boundaries ---
 double get_travel_time(double dist, double start_time) {
     double speed = traffic_profile.back().speed; 
     for (const auto &iv : traffic_profile) {
@@ -102,7 +102,7 @@ Candidate eval_hetero_move(const Vehicle &v, int cust_id, bool is_new, double cu
     return c;
 }
 
-// --- CORE SIMULTANEOUS SOLVER ---
+// --- CORE SIMULTANEOUS MULTI-TRIP SOLVER ---
 Result solve_sim(bool is_probabilistic, mt19937 &rng) {
     Result res;
     res.total_time = 0.0;
@@ -117,11 +117,28 @@ Result solve_sim(bool is_probabilistic, mt19937 &rng) {
 
         // 1. Check Active Fleet
         for (int v = 0; v < (int)fleet.size(); v++) {
+            bool made_customer_move = false;
             for (int i = 1; i < (int)customers.size(); i++) {
                 if (visited[i]) continue;
                 Candidate cand = eval_hetero_move(fleet[v], i, false);
                 if (cand.customer != -1) {
                     cand.vehicle_idx = v;
+                    valid_moves.push_back(cand);
+                    made_customer_move = true;
+                }
+            }
+            
+            // MULTI-TRIP DYNAMIC RETURN: If stuck due to capacity, evaluate returning to depot
+            if (!made_customer_move && fleet[v].current_node != 0) {
+                double travel = get_travel_time(get_distance(fleet[v].current_node, 0), fleet[v].clock_time);
+                if (fleet[v].clock_time + travel + RELOAD_TIME <= DEPOT_DUE) {
+                    Candidate cand;
+                    cand.customer = 0; // 0 signals depot return
+                    cand.vehicle_idx = v;
+                    cand.travel = travel;
+                    cand.arrive = fleet[v].clock_time + travel;
+                    cand.start = cand.arrive;
+                    cand.finish = cand.start + RELOAD_TIME;
                     valid_moves.push_back(cand);
                 }
             }
@@ -163,6 +180,7 @@ Result solve_sim(bool is_probabilistic, mt19937 &rng) {
         }
 
         if (best.vehicle_idx == -2) {
+            // Woke up a new truck from garage
             int g_idx = -1;
             for (int i = 0; i < (int)garage.size(); i++) {
                 if (garage[i] >= customers[best.customer].demand - EPS) {
@@ -172,23 +190,38 @@ Result solve_sim(bool is_probabilistic, mt19937 &rng) {
             Vehicle nv = {(int)fleet.size() + 1, best.finish, customers[best.customer].demand, best.customer, {0, best.customer}, true, garage[g_idx]};
             fleet.push_back(nv);
             garage.erase(garage.begin() + g_idx);
-        } else {
+            visited[best.customer] = true;
+            unvisited--;
+        } 
+        else if (best.customer == 0) {
+            // MULTI-TRIP: Truck dynamically returned to reload
+            Vehicle &v = fleet[best.vehicle_idx];
+            v.clock_time = best.finish;
+            v.current_node = 0;
+            v.current_load = 0.0;
+            v.route.push_back(0);
+            // Notice we do NOT decrement 'unvisited' here
+        } 
+        else {
+            // Normal customer visit
             Vehicle &v = fleet[best.vehicle_idx];
             v.current_load += customers[best.customer].demand;
             v.clock_time = best.finish;
             v.current_node = best.customer;
             v.route.push_back(best.customer);
+            visited[best.customer] = true;
+            unvisited--;
         }
-        visited[best.customer] = true;
-        unvisited--;
     }
 
-    // Return all vehicles to depot and sum total time
+    // Return all vehicles to depot at end of day
     for (auto &v : fleet) {
-        double ret = get_travel_time(get_distance(v.current_node, 0), v.clock_time);
-        if (v.clock_time + ret > DEPOT_DUE + EPS) return Result{false};
-        v.clock_time += ret;
-        v.route.push_back(0);
+        if (v.current_node != 0) {
+            double ret = get_travel_time(get_distance(v.current_node, 0), v.clock_time);
+            if (v.clock_time + ret > DEPOT_DUE + EPS) return Result{false};
+            v.clock_time += ret;
+            v.route.push_back(0);
+        }
         res.total_time += v.clock_time;
     }
     
@@ -201,7 +234,7 @@ Result solve_sim(bool is_probabilistic, mt19937 &rng) {
 map<string, double> load_milp_baselines(const string& filename) {
     map<string, double> baselines;
     ifstream file(filename);
-    if (!file) { cerr << "WARNING: Could not find " << filename << ". Ratios will be set to N/A.\n"; return baselines; }
+    if (!file) return baselines;
     string line;
     getline(file, line); 
     while (getline(file, line)) {
@@ -217,15 +250,11 @@ map<string, double> load_milp_baselines(const string& filename) {
 struct GroupStats {
     int inst_count = 0;
     double sum_dem_cap = 0;
-    
-    // Standard SIM
     int count_sim = 0; double sum_ratio_sim = 0; double sum_veh_sim = 0;
-    // Probabilistic SIM
     int count_prob = 0; double sum_ratio_prob = 0; double sum_veh_prob = 0;
 };
 
 void update_stats(GroupStats &stats, const Result &r, double best_sol, bool is_prob) {
-    // STRICT FIX: Only aggregate data if the heuristic succeeded AND we have a valid MILP proof
     if (r.feasible && best_sol > 0) {
         double veh = r.fleet.size();
         double ratio = r.total_time / best_sol;
@@ -246,7 +275,6 @@ void print_row(string col1, string col2, double dem_cap, const GroupStats& s) {
     cout << left << setw(8) << col1 << setw(6) << col2 
          << setw(10) << fixed << setprecision(2) << dem_cap;
 
-    // SIM 
     if (s.count_sim > 0) {
         cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_sim / s.count_sim);
         cout << setw(12) << fixed << setprecision(2) << (s.sum_veh_sim / s.count_sim);
@@ -254,7 +282,6 @@ void print_row(string col1, string col2, double dem_cap, const GroupStats& s) {
         cout << setw(10) << "N/A" << setw(12) << "N/A";
     }
 
-    // SIM+PROB
     if (s.count_prob > 0) {
         cout << setw(10) << fixed << setprecision(3) << (s.sum_ratio_prob / s.count_prob);
         cout << setw(8) << fixed << setprecision(2) << (s.sum_veh_prob / s.count_prob);
@@ -292,10 +319,8 @@ int main() {
         overall_stats.inst_count++;
         overall_stats.sum_dem_cap += current_ratio;
 
-        // Run Standard SIM
         update_stats(table_data[intervals][n], solve_sim(false, rng), best_sol, false);
         
-        // Run SIM+PROB (20 iterations)
         Result best_prob;
         for (int i = 0; i < 20; i++) {
             Result r = solve_sim(true, rng);
@@ -305,7 +330,7 @@ int main() {
     }
 
     cout << "\n=================================================================================\n";
-    cout << "TABLE V - RESULTS OF NEAREST-NEIGHBOR TDVRP HEURISTICS (SIMULTANEOUS)\n";
+    cout << "TABLE V - RESULTS OF NEAREST-NEIGHBOR TDVRP HEURISTICS (SIMULTANEOUS MULTI-TRIP)\n";
     cout << "=================================================================================\n";
     cout << left << setw(8) << "Ints" << setw(6) << "N" << setw(10) << "Dem/Cap" 
          << setw(22) << "------ SIM ------" << setw(18) << "--- SIM+PROB ---" << "\n";
