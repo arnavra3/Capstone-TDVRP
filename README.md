@@ -34,8 +34,9 @@ The TDVRP is formulated as a Mixed Integer problem because it must simultaneousl
 
 By expanding the depot into `K` sinks, the objective function naturally minimizes the total route time across all vehicles:
 
-![Objective Function](image_26bef8.png)
+<img width="167" height="60" alt="image" src="https://github.com/user-attachments/assets/d4b98896-d2db-4d28-8f6e-399699a8c452" />
 
 The complete formulation enforces strict constraints for node visitation, capacity limits, flow conservation, and the time-dependent link traversal:
 
-![MILP Constraints Formulation](image_26c262.jpg)
+<img width="901" height="847" alt="image" src="https://github.com/user-attachments/assets/e6e3826c-128b-43ea-8701-46a0b07c7ef2" />
+
