@@ -1,7 +1,5 @@
 # Time-Dependent Vehicle Routing Problem (TDVRP)
 
-This project implements a routing engine to solve the Time-Dependent Vehicle Routing Problem (TDVRP). A vehicle fleet of fixed capacities must serve customers with fixed demands from a central depot. The primary objective is to assign customers to specific vehicles and route them so that the total time spent by the fleet is strictly minimized.
-
 ---
 
 ## Problem Formulation
