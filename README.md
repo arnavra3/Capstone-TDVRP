@@ -25,6 +25,51 @@ In this formulation, every node `i` has exactly one continuous variable `ti` rep
 ### Core Assumptions
 1. **Vehicle Independence:** The travel time across any interval `M` is independent of the vehicle type (a standard baseline for urban environments).
 2. **Service Independence:** The collection or delivery time depends entirely on the customer's demand size, not the vehicle type.
+```mermaid
+graph LR
+    %% Define Nodes
+    Start((Node 1<br>Depot / Source))
+    
+    subgraph Customers [Customer Nodes]
+        C2((Node 2))
+        C3((Node 3))
+        C4((Node 4))
+        C5((Node 5))
+    end
+    
+    subgraph Sinks [End of Shift Nodes]
+        V1(((Node 6<br>Vehicle 1 Return)))
+        V2(((Node 7<br>Vehicle 2 Return)))
+    end
+
+    %% Source to Customers (One Way)
+    Start --> C2
+    Start --> C3
+    Start --> C4
+    Start --> C5
+
+    %% Customers to each other (Complete graph)
+    C2 <--> C3
+    C3 <--> C4
+    C4 <--> C5
+    C5 <--> C2
+    C2 <--> C4
+    C3 <--> C5
+
+    %% Customers to Sinks (One Way Final Return)
+    C2 --> V1 & V2
+    C3 --> V1 & V2
+    C4 --> V1 & V2
+    C5 --> V1 & V2
+
+    %% Styling
+    classDef depot fill:#333,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef customer fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    classDef sink fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+    
+    class Start depot;
+    class C2,C3,C4,C5 customer;
+    class V1,V2 sink;
 ---
 
 ## Mixed Integer Linear Programming (MILP) Model
