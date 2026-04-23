@@ -1,40 +1,21 @@
-<div align="center">
-  
-# 🚚 Time-Dependent Multi-Trip Vehicle Routing Problem (TD-MT-VRP)
-**A Simultaneous Heuristic Approach for Heterogeneous Fleets in Dynamic Traffic**
+# Time-Dependent Vehicle Routing Problem (TDVRP)
 
-[![C++](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/)
-[![Optimization](https://img.shields.io/badge/Optimization-Operations%20Research-success.svg)]()
-[![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)]()
-
-*A Capstone Research Project evaluating the trade-offs between computational time, fleet minimization, and dynamic reload mechanics across NP-Hard logistics networks.*
-
----
-</div>
-
-## 📌 Executive Summary
-Traditional vehicle routing assumes constant travel speeds and infinite truck capacities. Real-world logistics do not. [cite_start]This project introduces a highly realistic, C++ based routing engine that assigns customers to specific vehicles and routes them to minimize total time spent[cite: 4]. It solves for three massive real-world complexities simultaneously: Time-Dependent Traffic, Heterogeneous Fleets, and Multi-Trip Dynamic Returns.
+This project implements a routing engine to solve the Time-Dependent Vehicle Routing Problem (TDVRP). The TDVRP is an advanced operations research method used to compute optimal delivery routes for a fleet of vehicles. It works by constructing a directed network of customers and a central depot, evaluating vehicle capacities against customer demands, and generating routes that strictly minimize the total time spent by the entire fleet.
 
 ---
 
-## 🛑 1. The Problem Formulation
+## The Time-Dependent Constraint
 
-[cite_start]The problem is modeled as a complete directed graph $G(V,E)$, where nodes represent physical locations (the central depot and customers) and edges represent the road network[cite: 10, 12]. [cite_start]A fleet of vehicles with fixed, varied capacities must serve customers with specific demands[cite: 3].
+* **Distance:** The physical distance between nodes is fixed.
+* **Intervals:** The operational day is divided into distinct time periods ($m$).
+* **Step-Function:** Travel time depends entirely on departure time $t$.
 
-### The Core Complexity: The Time-Dependent Step Function
-The defining challenge of the TDVRP is that travel time is not based solely on physical distance. [cite_start]The travel time between two customers depends on the time of day the truck starts driving[cite: 5]. 
+Unlike standard routing models, the travel time between two nodes is not a static number. The day is divided into traffic intervals (e.g., morning rush hour, afternoon lull). A vehicle departing a node during a peak interval incurs a significant time penalty. This forces the algorithm to balance geographic efficiency against the heavy cost of traffic congestion.
 
-[cite_start]To model this mathematically, the day is divided into distinct time intervals ($M$)[cite: 14, 24]. [cite_start]The travel time $c(t)$ is calculated as a known step function based on the departure time $t$ at the origin node[cite: 13]. [cite_start]Once the departure interval is known, the transit time becomes a fixed constant for that link[cite: 15].
+---
 
-**Visualizing the Step Function:**
-*If a truck leaves Node A for Node B at 8:00 AM (Rush Hour), it falls into Interval 1. If it waits until 11:00 AM, it falls into Interval 2.*
+## 1. Network Initialization
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f4f4f4', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#ffffff'}}}%%
-graph LR
-    A[Node i<br>Origin] -->|Interval 1: Peak Traffic<br>Travel Time = 50 mins| B[Node j<br>Destination]
-    A -->|Interval 2: Normal Traffic<br>Travel Time = 30 mins| B
-    A -->|Interval 3: Light Traffic<br>Travel Time = 20 mins| B
-    
-    style A fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    style B fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+We create a complete directed graph `G(V, E)` consisting of `n` nodes (representing the depot and customers). The network relies on a time-dependent matrix `C(t)`. Every edge `(i, j)` is evaluated across `m` parallel time intervals. 
+
+The central depot is treated strictly as a "Start Only" node `0`. We initialize the routing sequence by setting the fleet's starting clock to `T=0`, allowing the solver to accurately calculate arrival times, enforce vehicle capacity limits, and determine the exact traffic interval a truck will hit when traversing the next link.
