@@ -74,6 +74,7 @@ graph LR
     class Start depot;
     class C2,C3,C4,C5 customer;
     class V1,V2 sink;
+```
 ---
 
 ## Mixed Integer Linear Programming (MILP) Model
