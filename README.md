@@ -1,21 +1,41 @@
 # Time-Dependent Vehicle Routing Problem (TDVRP)
 
-This project implements a routing engine to solve the Time-Dependent Vehicle Routing Problem (TDVRP). The TDVRP is an advanced operations research method used to compute optimal delivery routes for a fleet of vehicles. It works by constructing a directed network of customers and a central depot, evaluating vehicle capacities against customer demands, and generating routes that strictly minimize the total time spent by the entire fleet.
+This project implements a routing engine to solve the Time-Dependent Vehicle Routing Problem (TDVRP). A vehicle fleet of fixed capacities must serve customers with fixed demands from a central depot. The primary objective is to assign customers to specific vehicles and route them so that the total time spent by the fleet is strictly minimized.
 
 ---
 
-## The Time-Dependent Constraint
+## Problem Formulation
 
-* **Distance:** The physical distance between nodes is fixed.
-* **Intervals:** The operational day is divided into distinct time periods ($m$).
-* **Step-Function:** Travel time depends entirely on departure time $t$.
+The network is modeled as a complete directed graph `G(V, E)` consisting of `v` nodes (the physical customer locations plus the depot) and `e` links. In this model, the travel time between two points is not static; it depends on both the physical distance and the specific time of day the travel occurs.
 
-Unlike standard routing models, the travel time between two nodes is not a static number. The day is divided into traffic intervals (e.g., morning rush hour, afternoon lull). A vehicle departing a node during a peak interval incurs a significant time penalty. This forces the algorithm to balance geographic efficiency against the heavy cost of traffic congestion.
+### The Time-Dependent Step Function
+The network utilizes an `N x N` time-dependent matrix `C(t) = [cij(t)]`. The travel time on link `(i, j)` is calculated as a step function of the departure time `t` at the origin node `i`. 
+
+The operational day is divided into distinct time intervals (`M`). Once the departure time falls into a specific interval, the transit time for that link becomes a known constant. To represent this mathematically, the problem uses an expanded network where each physical link `(i, j)` is replaced by `M` parallel links, representing the varying traffic speeds across the day.
+
+### Graph Transformation (The Sink Nodes)
+To formulate this as a Mixed Integer Linear Programming (MILP) problem and completely eliminate mathematical routing loops, the depot architecture is modified into a one-way flow system:
+
+* **The Source (Node 1):** The central depot is treated strictly as a "Start Only" point. All inbound links to this node are removed.
+* **The Sinks (Nodes N+1 to N+K):** We introduce `K` virtual nodes to represent the "End of the Shift" for each of the `K` vehicles. 
+* **One-Way Flow:** All vehicles start at Node 1 and must terminate at one of the unique return nodes. The calculated travel time to any sink node is exactly equal to the travel time to the original physical depot.
+
+In this formulation, every node `i` has exactly one continuous variable `ti` representing the exact time the vehicle arrives at that node. 
+
+### Core Assumptions
+1. **Vehicle Independence:** The travel time across any interval `M` is independent of the vehicle type (a standard baseline for urban environments).
+2. **Service Independence:** The collection or delivery time depends entirely on the customer's demand size, not the vehicle type.
 
 ---
 
-## 1. Network Initialization
+## Mixed Integer Linear Programming (MILP) Model
 
-We create a complete directed graph `G(V, E)` consisting of `n` nodes (representing the depot and customers). The network relies on a time-dependent matrix `C(t)`. Every edge `(i, j)` is evaluated across `m` parallel time intervals. 
+The TDVRP is formulated as a Mixed Integer problem because it must simultaneously track discrete routing decisions (integer variables) and exact arrival schedules (continuous variables). 
 
-The central depot is treated strictly as a "Start Only" node `0`. We initialize the routing sequence by setting the fleet's starting clock to `T=0`, allowing the solver to accurately calculate arrival times, enforce vehicle capacity limits, and determine the exact traffic interval a truck will hit when traversing the next link.
+By expanding the depot into `K` sinks, the objective function naturally minimizes the total route time across all vehicles:
+
+![Objective Function](image_26bef8.png)
+
+The complete formulation enforces strict constraints for node visitation, capacity limits, flow conservation, and the time-dependent link traversal:
+
+![MILP Constraints Formulation](image_26c262.jpg)
