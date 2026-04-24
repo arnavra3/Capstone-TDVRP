@@ -86,7 +86,9 @@ By expanding the depot into `K` sinks, the objective function naturally minimize
 The complete formulation enforces strict constraints for node visitation, capacity limits, flow conservation, and the time-dependent link traversal:
 
 <img width="901" height="847" alt="image" src="https://github.com/user-attachments/assets/e6e3826c-128b-43ea-8701-46a0b07c7ef2" />
+
 ---
+
 ## Heuristic Methodologies
 
 Because exact mathematical proofs fail on realistically sized networks, the engine implements two algorithmic architectures to construct feasible routes efficiently.
