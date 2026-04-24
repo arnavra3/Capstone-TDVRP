@@ -150,6 +150,26 @@ This anomaly occurred because the custom C++ heuristics successfully discovered 
   </tr>
 </table>
 
+---
+
+### 3) MILP Optimization by Pruning using Heuristic Solution
+
+To address the `< 1.00` ratio anomaly and force a mathematically valid baseline comparison, an objective bounding (pruning) architecture was integrated into the MILP solver. The goal was to assist the exact solver in finding an optimal proof faster by reducing its search space.
+
+**The Pruning Mechanism:**
+1. **Global Minimum Extraction:** The system evaluated the output CSVs from all executed heuristic variants (SEQ-LS, SEQ-SL, and SIM) for a given instance.
+2. **Objective Bounding:** The absolute minimum (fastest) route time discovered among all heuristics was extracted and fed directly into the SCIP MILP solver as a strict upper bound. 
+3. **Branch-and-Bound Acceleration:** During execution, if the MILP solver explored a mathematical routing path that resulted in a worse time than the heuristic bound, that entire branch was immediately pruned. 
+
+**Results and Computational Reality:**
+While this technique theoretically speeds up the solver by drastically shrinking the search space, it yielded limited success under the strict 10-minute (600s) time constraint. 
+
+It frequently timed out without returning *any* feasible solution (as all feasible paths it discovered in 10 minutes were worse than the heuristic prune point and thus discarded). If there was a longer time allowed for the MILP then we could find better results.
+
+<img width="400" height="250" alt="image" src="https://github.com/user-attachments/assets/c434afd7-8b94-4383-8742-4d0a06ddaf7c" />
+
+
+
 
 
 
