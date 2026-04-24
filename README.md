@@ -1,5 +1,11 @@
 # Time-Dependent Vehicle Routing Problem (TDVRP)
-
+* **Heuristic Development:** Implementation of Sequential and Simultaneous dispatch architectures utilizing four decision rules: Shortest Travel Time (Baseline), Earliest Start Time, Earliest Finish Time, and Probabilistic Selection.
+* **Large-Scale Validation:** Evaluation of success rates across 500 generated instances using three map topologies (Clustered, Random, and Mixed) to simulate diverse urban environments.
+* **MILP Formulation:** Construction of a mathematical model for the Time-Dependent Vehicle Routing Problem (TDVRP) using the SCIP solver to establish exact performance baselines.
+* **Novelty Benchmarking:** Comparative analysis between the novel time-centric heuristics (V2, V3, V4) and the foundational 1992 Malandraki & Daskin baseline (V1) to measure efficiency gains in dynamic traffic.
+* **Computational Optimization:** Application of MILP pruning by injecting heuristic-derived lower bounds into the branch-and-bound process to accelerate the search for optimal proofs.
+* **Micro-Benchmark Comparison:** Validation of heuristic accuracy against exact mathematical optima using scaled-down micro-benchmarks (n=4 to 10) to bypass NP-Hard time limits.
+* **Multi-Trip Extension & Analysis:** Development of an MT-TDVRP variant incorporating a 30-minute warehouse reload penalty to analyze the operational tradeoff between fleet size reduction and total route time.
 ---
 
 ## Problem Formulation
