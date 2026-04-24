@@ -86,4 +86,36 @@ By expanding the depot into `K` sinks, the objective function naturally minimize
 The complete formulation enforces strict constraints for node visitation, capacity limits, flow conservation, and the time-dependent link traversal:
 
 <img width="901" height="847" alt="image" src="https://github.com/user-attachments/assets/e6e3826c-128b-43ea-8701-46a0b07c7ef2" />
+---
+## Heuristic Methodologies
+
+Because exact mathematical proofs fail on realistically sized networks, the engine implements two algorithmic architectures to construct feasible routes efficiently.
+
+### Route Construction Architectures
+* **Sequential Dispatch (SEQ):** A local greedy approach. It deploys a single vehicle, assigning it customers until it hits a capacity or time limit, and only then wakes a new truck from the depot.
+* **Simultaneous Dispatch (SIM):** A global greedy approach. At every step, it evaluates all unvisited customers against *all* currently active trucks plus available garage trucks, prioritizing system-wide speed over fleet minimization.
+
+### Different Heuristics (The 4 Variants)
+To determine the "best" move during construction, four distinct evaluation logics were implemented. Variant 1 acts as the academic baseline, while Variants 2, 3, and 4 represent novel extensions developed for this project.
+
+1. **V1: Shortest Travel Time (Baseline):** A pure greedy approach optimizing only for driving duration. Often fails because trucks rush to closed time windows and are forced to sit idle.
+2. **V2: Earliest Start Time (Novel):** Shifts optimization to arrival time. Reduces gate idling but ignores service duration, frequently trapping trucks in peak traffic upon departure.
+3. **V3: Earliest Finish Time (Novel):** Optimizes for absolute completion (Travel + Wait + Service). Naturally prioritizes nearby customers who are ready for immediate processing.
+4. **V4: Probabilistic Selection (Novel):** Looks at the top 5 options of the Earliest Finish Time and randomly chooses one. It repeats this process over 20 iterations and picks the highest-performing outcome to escape local optima.
+
+---
+
+### 1) Base Fleets
+
+We implemented all four heuristics on a total of 500 instances across three map structures (Clustered, Random, and Mixed) to simulate diverse urban and suburban environments. To strictly test the time-dependency, travel velocities were subjected to 4 distinct time intervals across the operational day.
+
+**i) Base Homogeneous Fleets**
+The initial benchmarking phase assumed a depot of identically sized vehicles. We applied the 4 heuristics and evaluated the success percentage of finding a valid solution across all three mapped methodologies. This isolated the time-dependent routing logic to prove it could navigate traffic constraints before introducing capacity variance.
+
+**ii) Base Heterogeneous Fleets**
+The fleet constraint was then upgraded to include vehicles of varying capacities. We applied all 4 heuristics using the following dispatch strategies:
+
+* **SEQ-LS (Sequential Large-to-Small):** This strategy uses the highest capacity vehicles first to clear dense, high-demand clusters before the traffic trap hits.
+* **SEQ-SL (Sequential Small-to-Large):** This efficiency strategy saves larger demand for the end of the day, using small trucks for morning deliveries to minimize wasted capacity.
+* **SIM (Simultaneous Best-Fit):** A hybrid of bin-packing and time-greedy logic. We looked at all vehicles and all customers simultaneously. For each customer, the algorithm finds the smallest garage truck that fits their demand (Best-Fit). Those Best-Fit options are put into a global pool with all other active trucks. The entire pool is then sorted by Earliest Finish Time (V3).
 
