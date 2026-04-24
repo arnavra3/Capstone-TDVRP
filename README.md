@@ -168,6 +168,32 @@ It frequently timed out without returning *any* feasible solution (as all feasib
 
 <img width="400" height="250" alt="image" src="https://github.com/user-attachments/assets/c434afd7-8b94-4383-8742-4d0a06ddaf7c" />
 
+---
+
+### 4) Micro-Benchmark Comparisons
+
+Because the standard networks universally timed out the exact solver, a specialized set of micro-benchmarks was generated to mathematically validate the efficiency of the heuristics. 
+
+**The Micro-Scale Parameters:**
+* The network size was scaled down to $n = 4, 6, 8, 10$ customers (reduced from $10-25$).
+* All other generation parameters—including the dynamic traffic intervals, the $100 \times 100$ coordinate grid, and the strict 10% capacity margin—remained completely identical.
+
+**Results Against Exact Proofs:**
+We re-applied the SCIP MILP solver with the same 10-minute limit. Because the factorial state space was significantly smaller, the solver successfully reached the true mathematical optimal bounds for these instances. This provided a 100% valid baseline to evaluate the heuristics.
+
+The results explicitly proved that our novel time-centric algorithms (**V2, V3, and V4**) dramatically outperformed the standard distance-greedy **V1** baseline from the 1992 paper. Optimizing for "Earliest Finish Time" (V3/V4) successfully navigated the time-dependent traffic traps that caused the legacy V1 algorithm to fail, generating near-optimal routes in a fraction of the computational time.
+
+<table>
+  <tr>
+    <td align="center"><img src="https://github.com/user-attachments/assets/990f5d6a-4a3d-48c0-aa80-0771a6ce0846" alt="Micro-Benchmark Result 1" width="100%" /></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/c31fd86d-5833-45a1-bf8d-213ef32d2ce9" alt="Micro-Benchmark Result 2" width="100%" /></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://github.com/user-attachments/assets/2ab267b2-d9ec-42ee-b86e-8247db8cd2c4" alt="Micro-Benchmark Result 3" width="100%" /></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/8dcc7274-a06a-4e87-b05d-d0ed27ef3227" alt="Micro-Benchmark Result 4" width="100%" /></td>
+  </tr>
+</table>
+
 
 
 
