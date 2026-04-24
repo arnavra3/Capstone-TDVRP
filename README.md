@@ -139,5 +139,9 @@ These generated instances were fed into an exact SCIP MILP solver. Because the T
 We evaluated the algorithms using a `Heuristic Time / MILP Best Time` ratio. Theoretically, an optimal ratio should always be $\ge 1.00$. However, our results frequently yielded outputs of **`< 1.00`**. 
 
 This anomaly occurred because the custom C++ heuristics successfully discovered a *faster, more efficient route in mere seconds* than the exact mathematical solver could find in 10 full minutes of computation. Most notably, the novel heuristics developed for this project (**V2, V3, and V4**) consistently and significantly outperformed the baseline **V1 (Travel Time)** heuristic provided in the original 1992 paper.
+<img width="1301" height="338" alt="image" src="https://github.com/user-attachments/assets/cb0e9706-7843-4368-86c6-166e95156e66" />
+<img width="751" height="331" alt="image" src="https://github.com/user-attachments/assets/50143490-79e8-4041-a3df-d3ba71657731" />
+
+
 
 
