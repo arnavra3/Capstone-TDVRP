@@ -121,3 +121,23 @@ The fleet constraint was then upgraded to include vehicles of varying capacities
 * **SEQ-SL (Sequential Small-to-Large):** This efficiency strategy saves larger demand for the end of the day, using small trucks for morning deliveries to minimize wasted capacity.
 * **SIM (Simultaneous Best-Fit):** A hybrid of bin-packing and time-greedy logic. We looked at all vehicles and all customers simultaneously. For each customer, the algorithm finds the smallest garage truck that fits their demand (Best-Fit). Those Best-Fit options are put into a global pool with all other active trucks. The entire pool is then sorted by Earliest Finish Time (V3).
 
+---
+
+### 2) Benchmark with MILP Implementation
+
+To rigorously evaluate the heuristics against exact mathematical proofs, a set of challenging benchmark instances was generated. The parameters closely mirror the methodology established in the foundational **Malandraki & Daskin (1992)** paper, but with extremely tight capacity constraints to stress-test the algorithms.
+
+**Benchmark Generation Parameters:**
+* **Network Size ($n$):** Small-scale networks consisting of 10, 15, 20, and 25 customers.
+* **Time Intervals ($m$):** 2 or 3 distinct traffic periods per operational day.
+* **Travel & Service Times:** Base travel times randomized [20, 80] and mapped to a $100 \times 100$ coordinate grid; service (unloading) durations randomized between [10, 20] minutes.
+* **Strict Capacity Constraints:** Fleet size restricted to between $n/6$ and $n/2$. Capacities were tightly calibrated so that the total fleet capacity exceeded total network demand by **exactly 10%**, forcing the algorithms to perform highly efficient bin-packing to survive.
+
+#### The 10-Minute Timeout & The `< 1.00` Ratio
+These generated instances were fed into an exact SCIP MILP solver. Because the TDVRP is NP-Hard, the exact solver was capped at a **10-minute (600s) time limit** per instance. For nearly all networks where $n \ge 15$, the solver failed to find the optimal proof within the limit, returning only a "feasible at best" solution.
+
+We evaluated the algorithms using a `Heuristic Time / MILP Best Time` ratio. Theoretically, an optimal ratio should always be $\ge 1.00$. However, our results frequently yielded outputs of **`< 1.00`**. 
+
+This anomaly occurred because the custom C++ heuristics successfully discovered a *faster, more efficient route in mere seconds* than the exact mathematical solver could find in 10 full minutes of computation. Most notably, the novel heuristics developed for this project (**V2, V3, and V4**) consistently and significantly outperformed the baseline **V1 (Travel Time)** heuristic provided in the original 1992 paper.
+
+
