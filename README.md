@@ -111,10 +111,10 @@ To determine the "best" move during construction, four distinct evaluation logic
 
 We implemented all four heuristics on a total of 500 instances across three map structures (Clustered, Random, and Mixed) to simulate diverse urban and suburban environments. To strictly test the time-dependency, travel velocities were subjected to 4 distinct time intervals across the operational day.
 
-**i) Base Homogeneous Fleets**
+**i) Base Homogeneous Fleets :**
 The initial benchmarking phase assumed a depot of identically sized vehicles. We applied the 4 heuristics and evaluated the success percentage of finding a valid solution across all three mapped methodologies. This isolated the time-dependent routing logic to prove it could navigate traffic constraints before introducing capacity variance.
 
-**ii) Base Heterogeneous Fleets**
+**ii) Base Heterogeneous Fleets :**
 The fleet constraint was then upgraded to include vehicles of varying capacities. We applied all 4 heuristics using the following dispatch strategies:
 
 * **SEQ-LS (Sequential Large-to-Small):** This strategy uses the highest capacity vehicles first to clear dense, high-demand clusters before the traffic trap hits.
