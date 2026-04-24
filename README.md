@@ -194,6 +194,46 @@ The results explicitly proved that our novel time-centric algorithms (**V2, V3, 
   </tr>
 </table>
 
+---
+
+### 5) Multi-Trip TDVRP (MT-TDVRP)
+
+To model maximum operational efficiency, we implemented a Multi-Trip extension where every vehicle is allowed to perform multiple routing shifts to satisfy customer demands. 
+
+Instead of permanently retiring a vehicle once its capacity is exhausted, the algorithm now generates a dynamic "Return to Depot" command. 
+
+**The Reload Logic:**
+* **The Penalty:** The vehicle drives back to the central depot, drops its loaded volume back to zero, and incurs a strict 30-minute Reload Penalty to realistically simulate warehouse loading times.
+* **The Time Check:** Before heading back out for a second shift, the truck checks its internal clock. If the current time plus the travel time to the next customer violates the depot's end-of-day closing deadline, the truck is officially retired for the day.
+* **Penalty Rollback:** If a truck returns to the depot and triggers the 30-minute reload penalty, but the algorithm then realizes it is too late in the day to make any further deliveries, the 30-minute penalty is mathematically rolled back.
+
+To maintain a valid comparison, the exact same micro-benchmark instances were used to test the MT-TDVRP.
+
+---
+
+#### The Multi-Trip Tradeoff (Time vs. Fleet Size)
+
+Allowing multiple trips introduces a massive strategic tradeoff between the total time spent driving (Heur/Best ratio) and the size of the fleet required. The two routing architectures handled this dynamic return mechanic very differently:
+
+* **Sequential Dispatch (SEQ):** Because the SEQ heuristic focuses on fully utilizing one vehicle before waking another, it aggressively leverages the Multi-Trip mechanic. It will force a vehicle to return, reload, and deploy until its shift clock completely expires. As a result, the **number of vehicles used drops significantly**, but the total route time (Heur/Best ratio) increases slightly due to the repeated 30-minute warehouse penalties.
+* **Simultaneous Dispatch (SIM):** As a global greedy algorithm, SIM sorts every possible move strictly by Earliest Finish Time (V3). Because a 30-minute reload penalty severely hurts a truck's "Finish Time" score, the SIM algorithm actively resists using the Multi-Trip feature unless it is absolutely forced to. It checks the normal move as well as the reload move, but generally prefers deploying a fresh garage truck. Consequently, for the SIM heuristic, the fleet size and route times remain almost identical to the single-trip version.
+
+Ultimately, this tradeoff allows logistics companies to select an algorithm based on their operational priorities: minimizing their active fleet size (SEQ) or strictly minimizing total delivery time (SIM).
+
+<table>
+  <tr>
+    <td align="center"><img src="https://github.com/user-attachments/assets/bc73cece-fa00-497e-962f-8aa20d8fee2c" alt="Multi-Trip Result 1" width="100%" /></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/d59ff188-559b-45e6-b727-7ed84d05a58a" alt="Multi-Trip Result 2" width="100%" /></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="https://github.com/user-attachments/assets/661bf70e-177f-43a7-b8da-bb8aa40125f4" alt="Multi-Trip Result 3" width="100%" /></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/41d9908b-dd32-459b-b14b-2f350ef6cbda" alt="Multi-Trip Result 4" width="100%" /></td>
+  </tr>
+</table>
+
+
+
+
 
 
 
