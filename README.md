@@ -30,9 +30,6 @@ In this formulation, every node `i` has exactly one continuous variable `ti` rep
 1. **Vehicle Independence:** The travel time across any interval `M` is independent of the vehicle type (a standard baseline for urban environments).
 2. **Service Independence:** The collection or delivery time depends entirely on the customer, not the vehicle type.
 
-### Visualizing the Graph Transformation (K=2 Vehicles)
-To eliminate mathematical routing loops, the depot architecture is modified into a one-way flow system. The original depot becomes a "Start Only" node, and we generate virtual "End of Shift" sink nodes for every vehicle in the fleet.
-
 ---
 
 ## Mixed Integer Linear Programming (MILP) Model
